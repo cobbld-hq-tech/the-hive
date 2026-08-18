@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>The HIVE Comics — Odessa, TX</title>
+<meta name="description" content="Organized play for Magic, Pokémon, Yu-Gi-Oh, One Piece and Riftbound in Odessa, Texas. Singles, sealed, comics and live breaks.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%23E89331' stroke='%2312100F' stroke-width='3'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Archivo+Black&family=Epilogue:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#0D0C0B;font-family:Epilogue,sans-serif;color:#12100F;}
+a{color:#B96A15;text-decoration:none} a:hover{color:#E89331}
+@keyframes flutter{from{transform:scaleY(1) rotate(-8deg)}to{transform:scaleY(.55) rotate(14deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes riseIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes hexdrift{from{transform:translate(0,0)}to{transform:translate(-56px,-96px)}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</helmet>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <pattern id="hexLogo" width="56" height="96" patternUnits="userSpaceOnUse" patternTransform="scale(.16)">
+      <g fill="none" stroke="#12100F" stroke-width="7">
+        <path d="M28 0 L56 16 L56 48 L28 64 L0 48 L0 16 Z"></path>
+        <path d="M0 48 L28 64 L28 96 L0 112 L-28 96 L-28 64 Z"></path>
+        <path d="M56 48 L84 64 L84 96 L56 112 L28 96 L28 64 Z"></path>
+      </g>
+    </pattern>
+    <pattern id="hexDark" width="56" height="96" patternUnits="userSpaceOnUse" patternTransform="scale(.6)">
+      <g fill="none" stroke="#E89331" stroke-width="3">
+        <path d="M28 0 L56 16 L56 48 L28 64 L0 48 L0 16 Z"></path>
+        <path d="M0 48 L28 64 L28 96 L0 112 L-28 96 L-28 64 Z"></path>
+        <path d="M56 48 L84 64 L84 96 L56 112 L28 96 L28 64 Z"></path>
+      </g>
+    </pattern>
+    <pattern id="hexInk" width="56" height="96" patternUnits="userSpaceOnUse" patternTransform="scale(.6)">
+      <g fill="none" stroke="#12100F" stroke-width="3">
+        <path d="M28 0 L56 16 L56 48 L28 64 L0 48 L0 16 Z"></path>
+        <path d="M0 48 L28 64 L28 96 L0 112 L-28 96 L-28 64 Z"></path>
+        <path d="M56 48 L84 64 L84 96 L56 112 L28 96 L28 64 Z"></path>
+      </g>
+    </pattern>
+  </defs>
+</svg>
+<!-- bee -->
+<div ref="{{ beeRef }}" aria-hidden="true" style="position:fixed;left:0;top:0;z-index:50;pointer-events:none;opacity:0;will-change:transform;transition:opacity .4s">
+  <div style="animation:bob 1.6s ease-in-out infinite">
+    <svg width="46" height="38" viewBox="0 0 46 38">
+      <ellipse cx="14" cy="10" rx="8" ry="5" fill="#FFFFFF" opacity=".75" style="transform-origin:18px 14px;animation:flutter .09s infinite alternate"></ellipse>
+      <ellipse cx="26" cy="9" rx="8" ry="5" fill="#FFFFFF" opacity=".55" style="transform-origin:24px 14px;animation:flutter .09s .04s infinite alternate"></ellipse>
+      <ellipse cx="22" cy="22" rx="13" ry="9" fill="#E89331" stroke="#12100F" stroke-width="2.5"></ellipse>
+      <path d="M17 14 L17 30 M23 13.5 L23 30.5 M29 14.5 L29 29.5" stroke="#12100F" stroke-width="3.5"></path>
+      <circle cx="37" cy="20" r="5.5" fill="#12100F"></circle>
+      <path d="M9 22 L4 24" stroke="#12100F" stroke-width="2.5" stroke-linecap="round"></path>
+    </svg>
+  </div>
+</div>
+<div style="max-width:1180px;margin:0 auto;padding:9px;display:flex;flex-direction:column;gap:9px">
+  <!-- header -->
+  <header style="background:#161412;border-radius:3px;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:14px">
+      <svg width="54" height="54" viewBox="0 0 120 120">
+        <g transform="rotate(21 60 60)">
+          <circle cx="60" cy="60" r="33" fill="#E89331" stroke="#12100F" stroke-width="5"></circle>
+          <circle cx="60" cy="60" r="30" fill="url(#hexLogo)"></circle>
+          <ellipse cx="60" cy="60" rx="55" ry="15" fill="none" stroke="#12100F" stroke-width="11"></ellipse>
+          <ellipse cx="60" cy="60" rx="55" ry="15" fill="none" stroke="#FFFFFF" stroke-width="6"></ellipse>
+        </g>
+      </svg>
+      <div style="display:flex;flex-direction:column;line-height:1;gap:2px">
+        <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.32em;color:#F4F1EB;text-transform:uppercase">The</span>
+        <span style="font-family:Bungee;font-size:30px;color:#E89331;line-height:1;display:inline-block;transform:skewX(-8deg);transform-origin:left bottom">HIVE</span>
+        <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.44em;color:#F4F1EB;text-transform:uppercase">Comics</span>
+      </div>
+    </div>
+    <nav style="display:flex;gap:26px;align-items:center">
+      <a href="#play" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#F4F1EB" style-hover="color:#F6B45A">Play</a>
+      <a href="#cards" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#F4F1EB" style-hover="color:#F6B45A">Cards</a>
+      <a href="#comics" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#F4F1EB" style-hover="color:#F6B45A">Comics</a>
+      <a href="#live" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#F4F1EB" style-hover="color:#F6B45A">Live</a>
+      <a href="#visit" style="background:#E89331;color:#12100F;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;padding:11px 20px;border-radius:3px;font-weight:700" style-hover="background:#F6B45A" style-active="background:#B96A15">Visit</a>
+    </nav>
+  </header>
+  <!-- hero: the board -->
+  <section id="play" style="background:#161412;border-radius:3px;padding:56px 48px 44px;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:-96px -56px 0 0;opacity:.12;pointer-events:none;animation:hexdrift 26s linear infinite">
+      <svg style="width:calc(100% + 56px);height:calc(100% + 96px)"><rect width="100%" height="100%" fill="url(#hexDark)"></rect></svg>
+    </div>
+    <div style="position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px">
+      <h1 style="font-family:'Archivo Black';font-size:88px;line-height:.95;text-transform:uppercase;color:#FFFFFF;margin:0;max-width:820px">
+        <span style="display:inline-block;animation:riseIn .5s .05s both">This week</span><br>
+        <span style="display:inline-block;animation:riseIn .5s .18s both">at the <span style="color:#E89331">tables</span></span>
+      </h1>
+      <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-end">
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#928C80;border:1px dashed #3A352F;border-radius:3px;padding:6px 10px">Placeholder times — confirm in store</span>
+        <p style="font-size:15px;line-height:1.6;color:#928C80;margin:0;max-width:300px;text-align:right;text-wrap:pretty">Bring a deck or borrow one. Come by even if you just want to watch a round.</p>
+      </div>
+    </div>
+    <div style="position:relative;display:flex;flex-direction:column">
+      <a href="#visit" style="display:grid;grid-template-columns:170px 1fr auto;gap:20px;align-items:baseline;padding:17px 12px;border-top:1px solid #2A2622;border-radius:3px;color:inherit" style-hover="background:#1D1A16" style-active="background:#231F1A">
+        <span style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.13em;color:#F6B45A">WED · TBD</span>
+        <span style="font-family:'Archivo Black';font-size:30px;text-transform:uppercase;color:#FFFFFF;line-height:.95">Magic — Commander night</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#928C80">Casual · all decks</span>
+      </a>
+      <a href="#visit" style="display:grid;grid-template-columns:170px 1fr auto;gap:20px;align-items:baseline;padding:17px 12px;border-top:1px solid #2A2622;border-radius:3px;color:inherit" style-hover="background:#1D1A16" style-active="background:#231F1A">
+        <span style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.13em;color:#F6B45A">THU · TBD</span>
+        <span style="font-family:'Archivo Black';font-size:30px;text-transform:uppercase;color:#FFFFFF;line-height:.95">Pokémon league night</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#928C80">All ages</span>
+      </a>
+      <a href="#visit" style="display:grid;grid-template-columns:170px 1fr auto;gap:20px;align-items:baseline;padding:17px 12px;border-top:1px solid #2A2622;border-radius:3px;color:inherit" style-hover="background:#1D1A16" style-active="background:#231F1A">
+        <span style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.13em;color:#F6B45A">FRI · TBD</span>
+        <span style="font-family:'Archivo Black';font-size:30px;text-transform:uppercase;color:#FFFFFF;line-height:.95">Yu-Gi-Oh locals</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#928C80">Advanced format</span>
+      </a>
+      <a href="#live" style="display:grid;grid-template-columns:170px 1fr auto;gap:20px;align-items:baseline;padding:17px 12px;border-top:1px solid #2A2622;border-bottom:1px solid #2A2622;border-radius:3px;color:inherit" style-hover="background:#1D1A16" style-active="background:#231F1A">
+        <span style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.13em;color:#F6B45A">SAT · TBD</span>
+        <span style="font-family:'Archivo Black';font-size:30px;text-transform:uppercase;color:#FFFFFF;line-height:.95">Trade night &amp; live break</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#928C80">Streaming on Whatnot</span>
+      </a>
+    </div>
+  </section>
+  <!-- game lineup -->
+  <div style="background:#E89331;border-radius:3px;padding:26px 48px;display:flex;justify-content:space-between;align-items:baseline;gap:16px 40px;flex-wrap:wrap">
+    <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#12100F">What we play</span>
+    <div style="display:flex;gap:14px 36px;align-items:baseline;flex-wrap:wrap">
+      <span style="font-family:Bungee;font-size:24px;color:#12100F">MAGIC</span>
+      <span style="font-family:Bungee;font-size:24px;color:#12100F">POKÉMON</span>
+      <span style="font-family:Bungee;font-size:24px;color:#12100F">YU-GI-OH</span>
+      <span style="font-family:Bungee;font-size:24px;color:#12100F">ONE PIECE</span>
+      <span style="font-family:Bungee;font-size:24px;color:#12100F">RIFTBOUND</span>
+    </div>
+  </div>
+  <!-- cards row -->
+  <section id="cards" style="display:grid;grid-template-columns:1.4fr 1fr;gap:9px">
+    <div style="background:#FFFFFF;border-radius:3px;padding:44px 40px">
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#B96A15;margin-bottom:14px">Singles &amp; sealed</div>
+      <h2 style="font-family:'Archivo Black';font-size:44px;line-height:.95;text-transform:uppercase;margin:0 0 18px;color:#12100F">The binder wall</h2>
+      <p style="font-size:15px;line-height:1.6;color:#5C574F;margin:0 0 28px;max-width:480px;text-wrap:pretty">Singles and sealed across all five games. Ask if you don't see it, most of it can be ordered in. Bring your binder on Saturdays and trade the doubles you're sick of looking at.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px">
+        <div style="aspect-ratio:5/7;transform:rotate(-2deg);position:relative;overflow:hidden;border-radius:8px">
+          <img src="https://api.scryfall.com/cards/named?exact=Rhystic%20Study&amp;format=image&amp;version=large" alt="Rhystic Study — Magic: The Gathering" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        </div>
+        <div style="aspect-ratio:5/7;transform:rotate(1.5deg);position:relative;overflow:hidden;border-radius:8px">
+          <img src="https://images.pokemontcg.io/base1/10_hires.png" alt="Mewtwo — Pokémon TCG" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        </div>
+        <div style="aspect-ratio:5/7;transform:rotate(-1deg);position:relative;overflow:hidden;border-radius:8px">
+          <img src="https://images.ygoprodeck.com/images/cards/33396948.jpg" alt="Exodia the Forbidden One — Yu-Gi-Oh" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        </div>
+      </div>
+    </div>
+    <div style="background:#161412;border-radius:3px;padding:44px 36px;position:relative;overflow:hidden;display:flex;flex-direction:column">
+      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.14;pointer-events:none"><rect width="100%" height="100%" fill="url(#hexDark)"></rect></svg>
+      <div style="position:relative">
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#E89331;margin-bottom:14px">Sports cards</div>
+        <h2 style="font-family:'Archivo Black';font-size:38px;line-height:.95;text-transform:uppercase;margin:0 0 18px;color:#FFFFFF">Card Vault, in store</h2>
+        <p style="font-size:15px;line-height:1.6;color:#928C80;margin:0 0 24px;text-wrap:pretty">Sports cards run in-store with our partners at Card Vault. Baseball, football, basketball, raw and graded. Same counter, different binders.</p>
+      </div>
+      <a href="#visit" style="position:relative;margin-top:auto;align-self:flex-start;background:#E89331;color:#12100F;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;padding:13px 22px;border-radius:3px" style-hover="background:#F6B45A" style-active="background:#B96A15">Come dig through</a>
+    </div>
+  </section>
+  <!-- comics + live -->
+  <section id="comics" style="display:grid;grid-template-columns:1fr 1.4fr;gap:9px">
+    <div id="live" style="background:#161412;border-radius:3px;padding:44px 36px;position:relative;overflow:hidden;display:flex;flex-direction:column">
+      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.14;pointer-events:none"><rect width="100%" height="100%" fill="url(#hexDark)"></rect></svg>
+      <div style="position:relative">
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#E89331;margin-bottom:14px">Live selling</div>
+        <h2 style="font-family:'Archivo Black';font-size:38px;line-height:.95;text-transform:uppercase;margin:0 0 18px;color:#FFFFFF">Breaks on stream</h2>
+        <p style="font-size:15px;line-height:1.6;color:#928C80;margin:0 0 24px;text-wrap:pretty">Box breaks and raw cards on Whatnot and TikTok, usually while trade night is running. Follow and you'll know when we go live.</p>
+      </div>
+      <div style="position:relative;margin-top:auto;display:flex;flex-direction:column;gap:8px">
+        <a href="https://www.tiktok.com/@thehivecomicshop" style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.13em;color:#F6B45A" style-hover="color:#E89331">@thehivecomicshop · TikTok</a>
+        <a href="https://instagram.com/thehivecomicshop" style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.13em;color:#F6B45A" style-hover="color:#E89331">@thehivecomicshop · Instagram</a>
+        <a href="https://facebook.com/thehivecomics" style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.13em;color:#F6B45A" style-hover="color:#E89331">facebook.com/thehivecomics</a>
+      </div>
+    </div>
+    <div style="background:#FFFFFF;border-radius:3px;padding:44px 40px;display:flex;gap:28px;align-items:stretch">
+      <div style="flex:1">
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#B96A15;margin-bottom:14px">Comics</div>
+        <h2 style="font-family:'Archivo Black';font-size:44px;line-height:.95;text-transform:uppercase;margin:0 0 18px;color:#12100F">New books every Wednesday</h2>
+        <p style="font-size:15px;line-height:1.6;color:#5C574F;margin:0 0 24px;max-width:400px;text-wrap:pretty">Weekly releases and back issues. Start a pull list and your books are waiting behind the counter, no race to the shelf.</p>
+        <a href="#visit" style="display:inline-block;background:#12100F;color:#FFFFFF;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;padding:13px 22px;border-radius:3px" style-hover="background:#B96A15;color:#12100F" style-active="background:#E89331;color:#12100F">Start a pull list</a>
+      </div>
+      <div style="width:210px;flex:none;transform:rotate(1.5deg);position:relative;overflow:hidden;border-radius:6px;min-height:300px">
+        <img src="https://images.pexels.com/photos/7768661/pexels-photo-7768661.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=700" alt="Vintage Invincible Iron Man comic book" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      </div>
+    </div>
+  </section>
+  <!-- visit -->
+  <section id="visit" style="background:#E89331;border-radius:3px;padding:48px 48px 40px">
+    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:end">
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#12100F;margin-bottom:14px">Visit</div>
+        <h2 style="font-family:'Archivo Black';font-size:56px;line-height:.95;text-transform:uppercase;margin:0 0 16px;color:#12100F">Odessa, Texas</h2>
+        <p style="font-size:15px;line-height:1.6;color:#12100F;margin:0;max-width:440px;text-wrap:pretty">Call before you drive out, hours are still settling in. If the lights are on, the tables are open.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#12100F;border:1.5px dashed #12100F;border-radius:3px;padding:10px 14px">Street address TBD — verify in person</span>
+        <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#12100F;border:1.5px dashed #12100F;border-radius:3px;padding:10px 14px">Weekly hours TBD — verify in person</span>
+        <a href="tel:+14322726710" style="background:#12100F;color:#FFFFFF;font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.13em;text-transform:uppercase;padding:14px;border-radius:3px;text-align:center" style-hover="background:#FFFFFF;color:#12100F" style-active="background:#F4F1EB;color:#12100F">(432) 272-6710</a>
+      </div>
+    </div>
+  </section>
+  <!-- footer -->
+  <footer style="background:#161412;border-radius:3px;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <span style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#928C80">The HIVE Comics · Odessa, TX</span>
+    <a href="mailto:thirdprintingcomics@gmail.com" style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.13em;color:#928C80" style-hover="color:#F6B45A">thirdprintingcomics@gmail.com</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;beeMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;follow cursor&quot;,&quot;ambient&quot;,&quot;off&quot;],&quot;default&quot;:&quot;follow cursor&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  beeRef = React.createRef();
+  componentDidMount() {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    this.tx = innerWidth * .7; this.ty = 180; this.x = this.tx; this.y = this.ty;
+    this.last = 0; this.idleT = Math.random() * 6;
+    this.onMove = (e) => { this.tx = e.clientX + 30; this.ty = e.clientY + 22; this.last = Date.now(); };
+    window.addEventListener('mousemove', this.onMove);
+    const loop = () => {
+      const el = this.beeRef.current;
+      const mode = this.props.beeMode ?? 'follow cursor';
+      if (el) {
+        if (mode === 'off') { el.style.opacity = '0'; }
+        else {
+          const idle = mode === 'ambient' || Date.now() - this.last > 2600;
+          if (idle) {
+            this.idleT += 0.011;
+            const cx = Math.min(innerWidth, 1180) * 0.72, cy = 190;
+            this.tx = cx + Math.cos(this.idleT) * 130;
+            this.ty = cy + Math.sin(this.idleT * 1.7) * 55;
+          }
+          const px = this.x;
+          this.x += (this.tx - this.x) * 0.055;
+          this.y += (this.ty - this.y) * 0.055;
+          const tilt = Math.max(-22, Math.min(22, (this.x - px) * 5));
+          const flip = this.tx < this.x - 4 ? -1 : 1;
+          el.style.transform = 'translate(' + this.x + 'px,' + this.y + 'px) rotate(' + tilt + 'deg) scaleX(' + flip + ')';
+          el.style.opacity = '1';
+        }
+      }
+      this.raf = requestAnimationFrame(loop);
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('mousemove', this.onMove);
+  }
+  renderVals() {
+    return { beeRef: this.beeRef };
+  }
+}
+</script>
+</body>
+</html>

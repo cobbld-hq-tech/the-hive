@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The HIVE Comics — Concept Preview</title>
+<meta name="description" content="Concept preview for The HIVE Comics — three homepage directions, desktop and mobile, for the card, comic and organized-play shop in Odessa, Texas.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z' fill='%23E89331' stroke='%2312100F' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Epilogue:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --amber:#E89331;
+    --ink:#12100F;
+    --bar:#0D0C0B;
+    --stage:#181513;
+    --line:rgba(255,255,255,.14);
+    --mut:rgba(255,255,255,.55);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--stage);
+    font-family:Epilogue,Arial,sans-serif;
+    color:#fff;
+    -webkit-font-smoothing:antialiased;
+    display:flex;flex-direction:column;min-height:100%;
+  }
+
+  /* ---------- Control bar ---------- */
+  .bar{
+    position:sticky;top:0;z-index:50;
+    background:var(--bar);color:#fff;
+    border-bottom:2px solid #000;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    padding:11px clamp(14px,3vw,28px);
+  }
+  .brand{display:flex;align-items:center;gap:11px;flex:none}
+  .brand svg{width:34px;height:auto;display:block}
+  .brand .t{line-height:1.15}
+  .brand .t b{font:400 16px Bungee,Impact,sans-serif;letter-spacing:.4px;display:block;color:#fff}
+  .brand .t span{font:700 9px 'Space Mono',monospace;letter-spacing:2px;color:var(--mut)}
+
+  .controls{display:flex;gap:16px;flex-wrap:wrap;flex:1;justify-content:center}
+  .group{display:flex;align-items:center;gap:9px}
+  .group>.lab{font:700 9px 'Space Mono',monospace;letter-spacing:2px;color:var(--mut)}
+  .seg{display:flex;background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:10px;padding:3px}
+  .seg button{
+    appearance:none;border:0;background:transparent;color:rgba(255,255,255,.72);
+    font:600 12.5px Epilogue,sans-serif;letter-spacing:.2px;cursor:pointer;
+    padding:8px 14px;border-radius:7px;transition:.15s;white-space:nowrap;
+  }
+  .seg button:hover{color:#fff}
+  .seg button[aria-pressed="true"]{background:var(--amber);color:var(--ink);font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+  .seg button .k{font:700 10px 'Space Mono',monospace;opacity:.6;margin-right:5px}
+  .seg button[aria-pressed="true"] .k{opacity:.75}
+
+  .open{
+    flex:none;text-decoration:none;color:#fff;
+    font:700 11px 'Space Mono',monospace;letter-spacing:1px;
+    border:1px solid var(--line);border-radius:8px;padding:9px 13px;
+    transition:.15s;
+  }
+  .open:hover{background:rgba(255,255,255,.1);border-color:var(--amber)}
+
+  /* ---------- Notice + caption ---------- */
+  .notice{
+    display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;
+    background:#221D18;border-bottom:1px solid rgba(255,255,255,.07);
+    padding:9px 16px;text-align:center;
+  }
+  .notice .tag{
+    flex:none;font:700 9px 'Space Mono',monospace;letter-spacing:1.5px;color:var(--ink);
+    background:var(--amber);padding:4px 9px;border-radius:5px;
+  }
+  .notice .msg{font:500 12px Epilogue,sans-serif;color:#9a8f82}
+  .notice .msg b{color:#d8cec1;font-weight:700}
+
+  .caption{
+    text-align:center;padding:16px 16px 4px;
+    font:700 10px 'Space Mono',monospace;letter-spacing:2px;color:#8a7f72;
+  }
+  .caption b{color:var(--amber)}
+
+  /* ---------- Stage ---------- */
+  .stagewrap{
+    flex:1;padding:14px clamp(10px,3vw,32px) 44px;display:flex;justify-content:center;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='96' viewBox='0 0 56 96'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.04' stroke-width='2'%3E%3Cpath d='M28 0 L56 16 L56 48 L28 64 L0 48 L0 16 Z'/%3E%3Cpath d='M0 48 L28 64 L28 96 L0 112 L-28 96 L-28 64 Z'/%3E%3Cpath d='M56 48 L84 64 L84 96 L56 112 L28 96 L28 64 Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .stage{position:relative;width:100%;max-width:1320px;transition:height .25s ease}
+
+  /* Every shell stays loaded so switching is instant, but the idle ones are
+     collapsed to nothing — left at full height they would still stretch the
+     page's scroll area, leaving dead space under the shorter directions. */
+  .device{
+    position:absolute;top:0;left:50%;transform:translateX(-50%);
+    opacity:0;pointer-events:none;transition:opacity .22s ease;
+    height:0;overflow:hidden;
+  }
+  .device.active{opacity:1;pointer-events:auto;z-index:2;height:auto;overflow:visible}
+
+  .chrome{
+    display:flex;align-items:center;gap:8px;
+    background:#dcdcdc;border:1px solid rgba(0,0,0,.3);border-bottom:none;
+    border-radius:11px 11px 0 0;padding:9px 13px;
+  }
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .chrome .url{
+    flex:1;background:#fff;border-radius:6px;padding:5px 10px;
+    font:400 11px 'Space Mono',monospace;color:#8a8a8a;text-align:center;
+  }
+  .screen{
+    position:relative;overflow:hidden;background:#0D0C0B;
+    border:1px solid rgba(0,0,0,.4);
+  }
+  .screen iframe{position:absolute;top:0;left:0;border:0;transform-origin:top left;background:#0D0C0B}
+
+  /* desktop shell */
+  .device.is-desktop .screen{border-radius:0 0 11px 11px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .device.is-desktop .chrome{display:flex}
+
+  /* phone shell */
+  .device.is-mobile{background:#000;border-radius:44px;padding:13px;box-shadow:0 28px 60px rgba(0,0,0,.55)}
+  .device.is-mobile .chrome{display:none}
+  .device.is-mobile .screen{border-radius:30px;border:0}
+
+  .loading{
+    position:absolute;inset:0;display:grid;place-items:center;z-index:5;
+    background:var(--stage);pointer-events:none;transition:opacity .3s;
+    font:700 10px 'Space Mono',monospace;letter-spacing:2px;color:#6f665c;
+  }
+  /* visibility is not transitioned, so the cover is gone the moment it is
+     flagged even if the opacity fade never gets a frame to run in */
+  .loading.hide{opacity:0;visibility:hidden}
+
+  @media (max-width:760px){
+    .controls{order:3;width:100%;justify-content:flex-start}
+    .open{order:2}
+  }
+</style>
+</head>
+<body>
+
+  <div class="bar">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z" fill="#E89331" stroke="#0D0C0B" stroke-width="3"/></svg>
+      <div class="t"><b>THE HIVE</b><span>CONCEPT PREVIEW</span></div>
+    </div>
+
+    <div class="controls">
+      <div class="group">
+        <span class="lab">DIRECTION</span>
+        <div class="seg" id="seg-design">
+          <button data-design="a" aria-pressed="true"><span class="k">A</span>Event Board</button>
+          <button data-design="b" aria-pressed="false"><span class="k">B</span>Product First</button>
+          <button data-design="c" aria-pressed="false"><span class="k">C</span>Buy Sell Trade</button>
+        </div>
+      </div>
+      <div class="group">
+        <span class="lab">VIEW</span>
+        <div class="seg" id="seg-view">
+          <button data-view="desktop" aria-pressed="true">Desktop</button>
+          <button data-view="mobile" aria-pressed="false">Mobile</button>
+        </div>
+      </div>
+    </div>
+
+    <a class="open" id="openFull" href="#" target="_blank" rel="noopener">OPEN FULL PAGE &#8599;</a>
+  </div>
+
+  <div class="notice">
+    <span class="tag">DRAFT</span>
+    <span class="msg">These are <b>draft concepts</b> &mdash; photos, logos and copy are placeholders while we settle on a direction.</span>
+  </div>
+
+  <div class="caption">SHOWING <b id="capDesign">A &middot; EVENT BOARD</b> &middot; <span id="capView">DESKTOP</span></div>
+
+  <div class="stagewrap">
+    <div class="stage" id="stage">
+      <div class="loading" id="loading">LOADING PREVIEW&hellip;</div>
+      <!-- device shells injected by JS -->
+    </div>
+  </div>
+
+<script>
+(function () {
+  /* ------------------------------------------------------------------
+     Three homepage directions. Desktop is one file each; the mobile views
+     all live in a single canvas file that holds the three phones side by
+     side, so the phone shell loads that canvas once and pans to the
+     column for whichever direction is selected.
+  ------------------------------------------------------------------ */
+  var DESIGNS = [
+    { key:'a', name:'A · Event Board',    file:'Hive Home.dc.html',   deskH:2156 },
+    { key:'b', name:'B · Product First',  file:'Hive Home B.dc.html', deskH:2050 },
+    { key:'c', name:'C · Buy Sell Trade', file:'Hive Home C.dc.html', deskH:2217 }
+  ];
+  var MOBILE_SRC = 'Hive Mobile.dc.html';
+
+  var DESK_W   = 1280;                         // logical desktop width
+  var COL_W    = 390;                          // one phone column in the canvas
+  var BEZEL    = 26;                           // phone padding (13px * 2)
+  var GAP      = 56, PAD_X = 48, PAD_Y = 56;   // canvas gap + section padding
+  var CANVAS_W = 1400;                         // logical width we render the canvas at
+  var MOB_H    = { a:2707, b:2614, c:2905 };   // fallbacks until measured
+  var CANVAS_H = 3017;
+
+  var state   = { design:'a', view:'desktop' };
+  var stage   = document.getElementById('stage');
+  var loading = document.getElementById('loading');
+  var desks   = {};
+  var mobile  = null;
+
+  function byKey(k){ for (var i=0;i<DESIGNS.length;i++) if (DESIGNS[i].key===k) return DESIGNS[i]; }
+  function idxOf(k){ for (var i=0;i<DESIGNS.length;i++) if (DESIGNS[i].key===k) return i; return 0; }
+
+  function shell(titleText, url) {
+    var d = document.createElement('div');
+    d.className = 'device';
+    d.innerHTML =
+      '<div class="chrome">' +
+        '<span class="dot" style="background:#ff5f57"></span>' +
+        '<span class="dot" style="background:#febc2e"></span>' +
+        '<span class="dot" style="background:#28c840"></span>' +
+        '<div class="url">' + url + '</div>' +
+      '</div>' +
+      '<div class="screen"><iframe title="' + titleText + '" loading="eager"></iframe></div>';
+    stage.appendChild(d);
+    return {
+      wrap:d, chrome:d.querySelector('.chrome'),
+      screen:d.querySelector('.screen'), iframe:d.querySelector('iframe'), ready:false
+    };
+  }
+
+  /* ---- one desktop shell per direction, plus one shared phone shell ---- */
+  DESIGNS.forEach(function (d) {
+    var dev = shell(d.name, 'thehivecomics.com');
+    dev.iframe.src = encodeURI(d.file);
+    dev.iframe.addEventListener('load', function () { dev.ready = true; hideLoaderMaybe(); layout(); });
+    desks[d.key] = dev;
+  });
+
+  mobile = shell('Mobile concepts', 'thehivecomics.com');
+  mobile.iframe.src = encodeURI(MOBILE_SRC);
+  mobile.iframe.addEventListener('load', function () { mobile.ready = true; hideLoaderMaybe(); layout(); });
+
+  function activeDev(){ return state.view === 'mobile' ? mobile : desks[state.design]; }
+  function hideLoaderMaybe(){ var d = activeDev(); if (d && d.ready) loading.classList.add('hide'); }
+
+  function docOf(iframe) {
+    try {
+      var doc = iframe.contentWindow.document;
+      return (doc && doc.body) ? doc : null;
+    } catch (e) { return null; }   // cross-origin, e.g. opened straight off the disk
+  }
+
+  function measureH(iframe) {
+    var doc = docOf(iframe); if (!doc) return null;
+    var h = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+    return h > 60 ? h : null;
+  }
+
+  /* Where one phone column sits inside the canvas. Measured directly when the
+     canvas is reachable; otherwise derived from its own flex layout maths, so
+     the preview still lands on the right column without same-origin access. */
+  function mobileGeom(key) {
+    var doc = docOf(mobile.iframe);
+    if (doc) {
+      var el = doc.getElementById(key);
+      if (el) {
+        var r = el.getBoundingClientRect();
+        if (r.height > 60) {
+          var sx = doc.documentElement.scrollLeft || doc.body.scrollLeft || 0;
+          var sy = doc.documentElement.scrollTop  || doc.body.scrollTop  || 0;
+          return {
+            x: r.left + sx, y: r.top + sy, h: r.height,
+            docH: Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight)
+          };
+        }
+      }
+    }
+    var contentW = COL_W * DESIGNS.length + GAP * (DESIGNS.length - 1);
+    var slack = Math.max(0, CANVAS_W - PAD_X * 2 - contentW);   // justify-content:center
+    return {
+      x: PAD_X + slack / 2 + idxOf(key) * (COL_W + GAP),
+      y: PAD_Y,
+      h: MOB_H[key],
+      docH: CANVAS_H
+    };
+  }
+
+  function sizeDesktop(key) {
+    var dev = desks[key];
+    var scale = Math.min(1, stage.clientWidth / DESK_W);
+    var h = measureH(dev.iframe) || byKey(key).deskH;
+    var on = (state.view === 'desktop' && key === state.design);
+
+    dev.wrap.className = 'device is-desktop' + (on ? ' active' : '');
+    var w = DESK_W * scale;
+    dev.chrome.style.width  = w + 'px';
+    dev.screen.style.width  = w + 'px';
+    dev.screen.style.height = (h * scale) + 'px';
+    dev.iframe.style.width  = DESK_W + 'px';
+    dev.iframe.style.height = h + 'px';
+    dev.iframe.style.transform = 'scale(' + scale + ')';
+  }
+
+  function sizeMobile() {
+    var g = mobileGeom(state.design);
+    var scale = Math.min(1, stage.clientWidth / (COL_W + BEZEL));
+
+    mobile.wrap.className = 'device is-mobile' + (state.view === 'mobile' ? ' active' : '');
+    mobile.screen.style.width  = (COL_W * scale) + 'px';
+    mobile.screen.style.height = (g.h * scale) + 'px';
+    // Sizing the iframe to the canvas's full height keeps it scrollbar-free,
+    // so the column offsets stay exactly where they were measured.
+    mobile.iframe.style.width  = CANVAS_W + 'px';
+    mobile.iframe.style.height = g.docH + 'px';
+    mobile.iframe.style.transform =
+      'scale(' + scale + ') translate(' + (-g.x) + 'px,' + (-g.y) + 'px)';
+  }
+
+  // The devices are absolutely positioned, so the stage has to be told how
+  // tall the active one is or the page will not scroll far enough. Do it
+  // synchronously — rAF never fires in a background tab, which would leave
+  // the preview clipped for anyone who opens the link and switches away.
+  function syncStageHeight() {
+    stage.style.height = activeDev().wrap.getBoundingClientRect().height + 'px';
+  }
+
+  function layout() {
+    DESIGNS.forEach(function (d) { sizeDesktop(d.key); });
+    sizeMobile();
+    syncStageHeight();
+    requestAnimationFrame(syncStageHeight);   // re-measure once the frame settles
+  }
+
+  function apply() {
+    var d = byKey(state.design);
+    document.getElementById('capDesign').textContent = d.name.toUpperCase();
+    document.getElementById('capView').textContent = state.view.toUpperCase();
+
+    document.getElementById('openFull').href = state.view === 'mobile'
+      ? encodeURI(MOBILE_SRC) + '#' + state.design
+      : encodeURI(d.file);
+
+    document.querySelectorAll('#seg-design button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.design === state.design));
+    });
+    document.querySelectorAll('#seg-view button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.view === state.view));
+    });
+
+    hideLoaderMaybe();
+    layout();
+  }
+
+  document.getElementById('seg-design').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.design = b.dataset.design; apply();
+  });
+  document.getElementById('seg-view').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    state.view = b.dataset.view; apply();
+  });
+
+  // arrow keys step through the directions during a walkthrough
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    if (e.target.closest('input,textarea')) return;
+    var i = idxOf(state.design) + (e.key === 'ArrowRight' ? 1 : -1);
+    state.design = DESIGNS[(i + DESIGNS.length) % DESIGNS.length].key;
+    apply();
+  });
+
+  var rafPending = false;
+  window.addEventListener('resize', function () {
+    if (rafPending) return; rafPending = true;
+    requestAnimationFrame(function () { rafPending = false; layout(); });
+  });
+
+  // keep correcting as webfonts and images settle in
+  setInterval(layout, 900);
+
+  apply();
+})();
+</script>
+</body>
+</html>

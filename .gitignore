@@ -1,0 +1,10 @@
+# Local editor / design-canvas artifacts
+.claude/
+.thumbnail
+
+# Pasted working references (not part of the preview)
+uploads/
+
+# OS cruft
+.DS_Store
+Thumbs.db
