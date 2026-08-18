@@ -143,13 +143,18 @@
      away — the buttons already read clearly on their own. */
   @media (max-width:620px){
     .bar{gap:9px;padding:9px 12px}
-    .brand{flex:1;min-width:0}
+    /* Hold the brand at its natural size — letting it flex meant the wordmark
+       got crushed into a two-line "THE / HIVE". */
+    .brand{flex:0 0 auto}
     .brand svg{width:28px}
     .brand .t b{font-size:14px}
     .brand .t span{font-size:8px;letter-spacing:1.5px}
-    .open{order:2;font-size:9.5px;letter-spacing:.5px;padding:8px 10px}
+    .brand .t b,.brand .t span{white-space:nowrap}
+    .open{order:2;margin-left:auto;font-size:9.5px;letter-spacing:.5px;padding:8px 10px}
 
-    .controls{order:3;width:100%;flex-direction:column;gap:7px}
+    /* flex-basis, not width: the base rule's flex:1 sets basis to 0, which
+       beats width:100% and would keep the controls on the brand's row. */
+    .controls{order:3;flex:1 0 100%;flex-direction:column;gap:7px}
     .group{width:100%}
     .group>.lab{display:none}
     .seg{width:100%}
@@ -174,8 +179,8 @@
      left to itself it wraps into three ragged ones. Giving the controls their
      own full-width row settles it at a tidy two. */
   @media (min-width:621px) and (max-width:1065px){
-    .controls{order:3;width:100%;justify-content:center}
-    .open{order:2}
+    .controls{order:3;flex:1 0 100%;justify-content:center}
+    .open{order:2;margin-left:auto}
   }
 </style>
 </head>
