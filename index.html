@@ -82,6 +82,7 @@
     font:700 10px 'Space Mono',monospace;letter-spacing:2px;color:#8a7f72;
   }
   .caption b{color:var(--amber)}
+  .caption .hint{display:block;margin-top:5px;color:#6f665c;letter-spacing:1.2px}
 
   /* ---------- Stage ---------- */
   .stagewrap{
@@ -134,8 +135,46 @@
      flagged even if the opacity fade never gets a frame to run in */
   .loading.hide{opacity:0;visibility:hidden}
 
-  @media (max-width:760px){
-    .controls{order:3;width:100%;justify-content:flex-start}
+  /* ---------- Phone layout ----------
+     The customer will often open this preview on their phone, so the bar has
+     to fit a narrow screen without pushing the page sideways. The segmented
+     controls go full width with equal-width buttons that wrap their labels
+     rather than overflow, and the standalone DIRECTION / VIEW captions drop
+     away — the buttons already read clearly on their own. */
+  @media (max-width:620px){
+    .bar{gap:9px;padding:9px 12px}
+    .brand{flex:1;min-width:0}
+    .brand svg{width:28px}
+    .brand .t b{font-size:14px}
+    .brand .t span{font-size:8px;letter-spacing:1.5px}
+    .open{order:2;font-size:9.5px;letter-spacing:.5px;padding:8px 10px}
+
+    .controls{order:3;width:100%;flex-direction:column;gap:7px}
+    .group{width:100%}
+    .group>.lab{display:none}
+    .seg{width:100%}
+    .seg button{
+      flex:1;min-width:0;padding:9px 5px;font-size:11.5px;
+      white-space:normal;line-height:1.2;text-align:center;
+    }
+    .seg button .k{margin-right:4px;font-size:9.5px}
+
+    .notice{padding:8px 12px;gap:6px}
+    .notice .msg{font-size:11px}
+    .caption{padding:12px 12px 2px;font-size:9px;letter-spacing:1.4px}
+
+    .stagewrap{padding:10px 6px 28px}
+    /* No phone bezel when they are already holding a phone — it only steals
+       width from the mockup. The JS reads this padding back when scaling. */
+    .device.is-mobile{padding:0;background:transparent;border-radius:0;box-shadow:0 12px 30px rgba(0,0,0,.5)}
+    .device.is-mobile .screen{border-radius:14px}
+  }
+
+  /* Tablets and small laptops: the full bar needs ~1065px for one row, and
+     left to itself it wraps into three ragged ones. Giving the controls their
+     own full-width row settles it at a tidy two. */
+  @media (min-width:621px) and (max-width:1065px){
+    .controls{order:3;width:100%;justify-content:center}
     .open{order:2}
   }
 </style>
@@ -174,7 +213,7 @@
     <span class="msg">These are <b>draft concepts</b> &mdash; photos, logos and copy are placeholders while we settle on a direction.</span>
   </div>
 
-  <div class="caption">SHOWING <b id="capDesign">A &middot; EVENT BOARD</b> &middot; <span id="capView">DESKTOP</span></div>
+  <div class="caption">SHOWING <b id="capDesign">A &middot; EVENT BOARD</b> &middot; <span id="capView">DESKTOP</span><span class="hint" id="capHint"></span></div>
 
   <div class="stagewrap">
     <div class="stage" id="stage">
@@ -200,7 +239,6 @@
 
   var DESK_W   = 1280;                         // logical desktop width
   var COL_W    = 390;                          // one phone column in the canvas
-  var BEZEL    = 26;                           // phone padding (13px * 2)
   var GAP      = 56, PAD_X = 48, PAD_Y = 56;   // canvas gap + section padding
   var CANVAS_W = 1400;                         // logical width we render the canvas at
   var MOB_H    = { a:2707, b:2614, c:2905 };   // fallbacks until measured
@@ -308,9 +346,13 @@
 
   function sizeMobile() {
     var g = mobileGeom(state.design);
-    var scale = Math.min(1, stage.clientWidth / (COL_W + BEZEL));
 
     mobile.wrap.className = 'device is-mobile' + (state.view === 'mobile' ? ' active' : '');
+    // Whether there is a phone bezel is a CSS decision (it is dropped on
+    // phones), so read it back rather than keeping a second copy here.
+    var bezel = 2 * (parseFloat(getComputedStyle(mobile.wrap).paddingLeft) || 0);
+    var scale = Math.min(1, stage.clientWidth / (COL_W + bezel));
+
     mobile.screen.style.width  = (COL_W * scale) + 'px';
     mobile.screen.style.height = (g.h * scale) + 'px';
     // Sizing the iframe to the canvas's full height keeps it scrollbar-free,
@@ -329,9 +371,23 @@
     stage.style.height = activeDev().wrap.getBoundingClientRect().height + 'px';
   }
 
+  // A 1280px page shown on a phone lands around 29%, which is a layout
+  // overview rather than something readable. Say so, so nobody mistakes the
+  // scaling for the design being broken.
+  function updateHint() {
+    var hint = document.getElementById('capHint');
+    var txt = '';
+    if (state.view === 'desktop') {
+      var s = Math.min(1, stage.clientWidth / DESK_W);
+      if (s < 0.6) txt = 'SCALED TO ' + Math.round(s * 100) + '% — OPEN FULL PAGE FOR DETAIL';
+    }
+    if (hint.textContent !== txt) hint.textContent = txt;
+  }
+
   function layout() {
     DESIGNS.forEach(function (d) { sizeDesktop(d.key); });
     sizeMobile();
+    updateHint();
     syncStageHeight();
     requestAnimationFrame(syncStageHeight);   // re-measure once the frame settles
   }
