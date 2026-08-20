@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The HIVE Comics — Concept Preview</title>
-<meta name="description" content="Concept preview for The HIVE Comics — three homepage directions, desktop and mobile, for the card, comic and organized-play shop in Odessa, Texas.">
+<title>The HIVE Comics · Concept Preview</title>
+<meta name="description" content="Concept preview for The HIVE Comics: three homepage directions, desktop and mobile, for the card, comic and organized-play shop in Odessa, Texas.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z' fill='%23E89331' stroke='%2312100F' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
@@ -92,7 +92,7 @@
   .stage{position:relative;width:100%;max-width:1320px;transition:height .25s ease}
 
   /* Every shell stays loaded so switching is instant, but the idle ones are
-     collapsed to nothing — left at full height they would still stretch the
+     collapsed to nothing; left at full height they would still stretch the
      page's scroll area, leaving dead space under the shorter directions. */
   .device{
     position:absolute;top:0;left:50%;transform:translateX(-50%);
@@ -140,10 +140,10 @@
      to fit a narrow screen without pushing the page sideways. The segmented
      controls go full width with equal-width buttons that wrap their labels
      rather than overflow, and the standalone DIRECTION / VIEW captions drop
-     away — the buttons already read clearly on their own. */
+     away; the buttons already read clearly on their own. */
   @media (max-width:620px){
     .bar{gap:9px;padding:9px 12px}
-    /* Hold the brand at its natural size — letting it flex meant the wordmark
+    /* Hold the brand at its natural size; letting it flex meant the wordmark
        got crushed into a two-line "THE / HIVE". */
     .brand{flex:0 0 auto}
     .brand svg{width:28px}
@@ -169,7 +169,7 @@
     .caption{padding:12px 12px 2px;font-size:9px;letter-spacing:1.4px}
 
     .stagewrap{padding:10px 6px 28px}
-    /* No phone bezel when they are already holding a phone — it only steals
+    /* No phone bezel when they are already holding a phone; it only steals
        width from the mockup. The JS reads this padding back when scaling. */
     .device.is-mobile{padding:0;background:transparent;border-radius:0;box-shadow:0 12px 30px rgba(0,0,0,.5)}
     .device.is-mobile .screen{border-radius:14px}
@@ -215,7 +215,7 @@
 
   <div class="notice">
     <span class="tag">DRAFT</span>
-    <span class="msg">Three homepage directions to compare. Stock photography for now &mdash; pick a direction and we build it out with your own.</span>
+    <span class="msg">Three homepage directions to compare. Stock photography for now. Pick a direction and we build it out with your own.</span>
   </div>
 
   <div class="caption">SHOWING <b id="capDesign">A &middot; EVENT BOARD</b> &middot; <span id="capView">DESKTOP</span><span class="hint" id="capHint"></span></div>
@@ -370,7 +370,7 @@
 
   // The devices are absolutely positioned, so the stage has to be told how
   // tall the active one is or the page will not scroll far enough. Do it
-  // synchronously — rAF never fires in a background tab, which would leave
+  // synchronously; rAF never fires in a background tab, which would leave
   // the preview clipped for anyone who opens the link and switches away.
   function syncStageHeight() {
     stage.style.height = activeDev().wrap.getBoundingClientRect().height + 'px';
@@ -384,7 +384,7 @@
     var txt = '';
     if (state.view === 'desktop') {
       var s = Math.min(1, stage.clientWidth / DESK_W);
-      if (s < 0.6) txt = 'SCALED TO ' + Math.round(s * 100) + '% — OPEN FULL PAGE FOR DETAIL';
+      if (s < 0.6) txt = 'SCALED TO ' + Math.round(s * 100) + '% · OPEN FULL PAGE FOR DETAIL';
     }
     if (hint.textContent !== txt) hint.textContent = txt;
   }
